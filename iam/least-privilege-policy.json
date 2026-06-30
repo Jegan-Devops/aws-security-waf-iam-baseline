@@ -1,0 +1,46 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowECSDeployActionsOnly",
+      "Effect": "Allow",
+      "Action": [
+        "ecs:UpdateService",
+        "ecs:DescribeServices",
+        "ecs:DescribeTasks",
+        "ecs:ListTasks"
+      ],
+      "Resource": "arn:aws:ecs:ap-south-1:ACCOUNT_ID:service/demo-cluster/demo-app-service"
+    },
+    {
+      "Sid": "AllowECRPushPullOnSpecificRepoOnly",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:PutImage",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload"
+      ],
+      "Resource": "arn:aws:ecr:ap-south-1:ACCOUNT_ID:repository/demo-app"
+    },
+    {
+      "Sid": "AllowECRAuthToken",
+      "Effect": "Allow",
+      "Action": "ecr:GetAuthorizationToken",
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyDeleteOnProductionResources",
+      "Effect": "Deny",
+      "Action": [
+        "ecs:DeleteService",
+        "ecs:DeleteCluster",
+        "ecr:DeleteRepository"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
